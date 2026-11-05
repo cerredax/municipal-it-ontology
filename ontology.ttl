@@ -1,0 +1,366 @@
+@prefix : <https://w3id.org/municipal-it-incidents#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <https://w3id.org/municipal-it-incidents#> .
+
+<https://w3id.org/municipal-it-incidents> rdf:type owl:Ontology ;
+                                           owl:versionIRI <https://w3id.org/municipal-it-incidents/1.1> ;
+                                           <http://purl.org/dc/terms/abstract> "An OWL 2 ontology for describing municipal IT incidents, employees, departments, devices and technician assignments."@en ;
+                                           <http://purl.org/dc/terms/creator> "Omar García Carballo" ;
+                                           <http://purl.org/dc/terms/description> "The ontology supports a small municipal helpdesk. It models incident reporting, affected devices, current status and priority, assignment to technicians and employee department membership. Software applications, network infrastructure, service-level agreements and change management are outside its scope."@en ;
+                                           <http://purl.org/dc/terms/language> "en" ;
+                                           <http://purl.org/dc/terms/license> <https://creativecommons.org/licenses/by/4.0/> ;
+                                           <http://purl.org/dc/terms/modified> "2026-11-05"^^xsd:date ;
+                                           <http://purl.org/dc/terms/title> "Municipal IT Incident Ontology"@en ;
+                                           <http://purl.org/vocab/vann/preferredNamespacePrefix> "mit" ;
+                                           <http://purl.org/vocab/vann/preferredNamespaceUri> "https://w3id.org/municipal-it-incidents#" ;
+                                           rdfs:comment "Course project. OWL describes the domain under the open-world assumption. Required-field, unique identifier and missing-assignment checks require closed-world application or SHACL validation."@en ;
+                                           rdfs:label "Municipal IT Incident Ontology"@en ;
+                                           owl:versionInfo "1.1" ;
+                                           <https://schema.org/codeRepository> <https://github.com/cerredax/municipal-it-ontology> ;
+                                           <https://w3id.org/widoco/vocab#description> "Technician specialises Employee; Computer and Printer specialise Device. Each incident has one reporter, identifier, description, reporting date, status and priority, and at most one assigned technician. In-progress and resolved incidents require an assignment. Open-world OWL semantics do not validate missing fields or unique identifiers in application records; those checks require application logic or SHACL. Only current status is represented, not status history."@en ;
+                                           <https://w3id.org/widoco/vocab#introduction> "This vocabulary was developed by Omar García Carballo as a practical ontology engineering course project. Intended users are municipal helpdesk staff and developers of interoperable incident management systems."@en .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/terms/abstract
+<http://purl.org/dc/terms/abstract> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/creator
+<http://purl.org/dc/terms/creator> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/description
+<http://purl.org/dc/terms/description> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/language
+<http://purl.org/dc/terms/language> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/license
+<http://purl.org/dc/terms/license> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/modified
+<http://purl.org/dc/terms/modified> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/title
+<http://purl.org/dc/terms/title> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/vocab/vann/preferredNamespacePrefix
+<http://purl.org/vocab/vann/preferredNamespacePrefix> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/vocab/vann/preferredNamespaceUri
+<http://purl.org/vocab/vann/preferredNamespaceUri> rdf:type owl:AnnotationProperty .
+
+
+###  https://schema.org/codeRepository
+<https://schema.org/codeRepository> rdf:type owl:AnnotationProperty .
+
+
+###  https://w3id.org/widoco/vocab#description
+<https://w3id.org/widoco/vocab#description> rdf:type owl:AnnotationProperty .
+
+
+###  https://w3id.org/widoco/vocab#introduction
+<https://w3id.org/widoco/vocab#introduction> rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://www.w3.org/2001/XMLSchema#date
+xsd:date rdf:type rdfs:Datatype .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  https://w3id.org/municipal-it-incidents#affectsDevice
+:affectsDevice rdf:type owl:ObjectProperty ;
+               rdfs:domain :ITIncident ;
+               rdfs:range :Device ;
+               rdfs:comment "A device affected by an incident; an incident may affect several devices."@en ;
+               rdfs:label "affectsDevice"@en .
+
+
+###  https://w3id.org/municipal-it-incidents#assignedTo
+:assignedTo rdf:type owl:ObjectProperty ,
+                     owl:FunctionalProperty ;
+            rdfs:domain :ITIncident ;
+            rdfs:range :Technician ;
+            rdfs:comment "The technician currently assigned to an incident."@en ;
+            rdfs:label "assignedTo"@en .
+
+
+###  https://w3id.org/municipal-it-incidents#belongsToDepartment
+:belongsToDepartment rdf:type owl:ObjectProperty ,
+                              owl:FunctionalProperty ;
+                     rdfs:domain :Employee ;
+                     rdfs:range :Department ;
+                     rdfs:comment "The municipal department to which an employee belongs."@en ;
+                     rdfs:label "belongsToDepartment"@en .
+
+
+###  https://w3id.org/municipal-it-incidents#hasPriority
+:hasPriority rdf:type owl:ObjectProperty ,
+                      owl:FunctionalProperty ;
+             rdfs:domain :ITIncident ;
+             rdfs:range :IncidentPriority ;
+             rdfs:comment "The current priority of an incident: Low, Medium or High."@en ;
+             rdfs:label "hasPriority"@en .
+
+
+###  https://w3id.org/municipal-it-incidents#hasStatus
+:hasStatus rdf:type owl:ObjectProperty ,
+                    owl:FunctionalProperty ;
+           rdfs:domain :ITIncident ;
+           rdfs:range :IncidentStatus ;
+           rdfs:comment "The current status of an incident: Open, InProgress or Resolved."@en ;
+           rdfs:label "hasStatus"@en .
+
+
+###  https://w3id.org/municipal-it-incidents#reportedBy
+:reportedBy rdf:type owl:ObjectProperty ,
+                     owl:FunctionalProperty ;
+            rdfs:domain :ITIncident ;
+            rdfs:range :Employee ;
+            rdfs:comment "The employee who reported an incident."@en ;
+            rdfs:label "reportedBy"@en .
+
+
+###  https://w3id.org/municipal-it-incidents#usesDevice
+:usesDevice rdf:type owl:ObjectProperty ;
+            rdfs:domain :Employee ;
+            rdfs:range :Device ;
+            rdfs:comment "A device used by an employee; devices may be shared."@en ;
+            rdfs:label "usesDevice"@en .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  https://w3id.org/municipal-it-incidents#description
+:description rdf:type owl:DatatypeProperty ,
+                      owl:FunctionalProperty ;
+             rdfs:domain :ITIncident ;
+             rdfs:range xsd:string ;
+             rdfs:comment "A textual description of the incident."@en ;
+             rdfs:label "description"@en .
+
+
+###  https://w3id.org/municipal-it-incidents#incidentId
+:incidentId rdf:type owl:DatatypeProperty ,
+                     owl:FunctionalProperty ;
+            rdfs:domain :ITIncident ;
+            rdfs:range xsd:string ;
+            rdfs:comment "The identifier assigned to an incident by the helpdesk application. Global uniqueness must be checked by the application."@en ;
+            rdfs:label "incidentId"@en .
+
+
+###  https://w3id.org/municipal-it-incidents#reportedAt
+:reportedAt rdf:type owl:DatatypeProperty ,
+                     owl:FunctionalProperty ;
+            rdfs:domain :ITIncident ;
+            rdfs:range xsd:dateTime ;
+            rdfs:comment "The date and time at which an incident was reported."@en ;
+            rdfs:label "reportedAt"@en .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  https://w3id.org/municipal-it-incidents#Computer
+:Computer rdf:type owl:Class ;
+          rdfs:subClassOf :Device ;
+          rdfs:comment "Computer device."@en ;
+          rdfs:label "Computer"@en .
+
+
+###  https://w3id.org/municipal-it-incidents#Department
+:Department rdf:type owl:Class ;
+            rdfs:comment "Municipal organisational unit."@en ;
+            rdfs:label "Department"@en .
+
+
+###  https://w3id.org/municipal-it-incidents#Device
+:Device rdf:type owl:Class ;
+        rdfs:comment "Physical IT equipment."@en ;
+        rdfs:label "Device"@en .
+
+
+###  https://w3id.org/municipal-it-incidents#Employee
+:Employee rdf:type owl:Class ;
+          rdfs:subClassOf [ rdf:type owl:Restriction ;
+                            owl:onProperty :belongsToDepartment ;
+                            owl:cardinality "1"^^xsd:nonNegativeInteger
+                          ] ;
+          rdfs:comment "Municipal employee."@en ;
+          rdfs:label "Employee"@en .
+
+
+###  https://w3id.org/municipal-it-incidents#ITIncident
+:ITIncident rdf:type owl:Class ;
+            rdfs:subClassOf [ rdf:type owl:Restriction ;
+                              owl:onProperty :hasPriority ;
+                              owl:cardinality "1"^^xsd:nonNegativeInteger
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :hasStatus ;
+                              owl:cardinality "1"^^xsd:nonNegativeInteger
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :reportedBy ;
+                              owl:cardinality "1"^^xsd:nonNegativeInteger
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :assignedTo ;
+                              owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :description ;
+                              owl:cardinality "1"^^xsd:nonNegativeInteger
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :incidentId ;
+                              owl:cardinality "1"^^xsd:nonNegativeInteger
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :reportedAt ;
+                              owl:cardinality "1"^^xsd:nonNegativeInteger
+                            ] ;
+            rdfs:comment "Unplanned interruption or reduction in IT service quality."@en ;
+            rdfs:label "ITIncident"@en .
+
+
+###  https://w3id.org/municipal-it-incidents#IncidentPriority
+:IncidentPriority rdf:type owl:Class ;
+                  owl:equivalentClass [ rdf:type owl:Class ;
+                                        owl:oneOf ( :High
+                                                    :Low
+                                                    :Medium
+                                                  )
+                                      ] ;
+                  rdfs:comment "Controlled current incident priority."@en ;
+                  rdfs:label "IncidentPriority"@en .
+
+
+###  https://w3id.org/municipal-it-incidents#IncidentStatus
+:IncidentStatus rdf:type owl:Class ;
+                owl:equivalentClass [ rdf:type owl:Class ;
+                                      owl:oneOf ( :InProgress
+                                                  :Open
+                                                  :Resolved
+                                                )
+                                    ] ;
+                rdfs:comment "Controlled current incident status."@en ;
+                rdfs:label "IncidentStatus"@en .
+
+
+###  https://w3id.org/municipal-it-incidents#Printer
+:Printer rdf:type owl:Class ;
+         rdfs:subClassOf :Device ;
+         rdfs:comment "Printer device."@en ;
+         rdfs:label "Printer"@en .
+
+
+###  https://w3id.org/municipal-it-incidents#Technician
+:Technician rdf:type owl:Class ;
+            rdfs:subClassOf :Employee ;
+            rdfs:comment "Employee responsible for handling IT incidents."@en ;
+            rdfs:label "Technician"@en .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  https://w3id.org/municipal-it-incidents#High
+:High rdf:type owl:NamedIndividual ,
+               :IncidentPriority ;
+      rdfs:label "High"@en .
+
+
+###  https://w3id.org/municipal-it-incidents#InProgress
+:InProgress rdf:type owl:NamedIndividual ,
+                     :IncidentStatus ;
+            rdfs:label "InProgress"@en .
+
+
+###  https://w3id.org/municipal-it-incidents#Low
+:Low rdf:type owl:NamedIndividual ,
+              :IncidentPriority ;
+     rdfs:label "Low"@en .
+
+
+###  https://w3id.org/municipal-it-incidents#Medium
+:Medium rdf:type owl:NamedIndividual ,
+                 :IncidentPriority ;
+        rdfs:label "Medium"@en .
+
+
+###  https://w3id.org/municipal-it-incidents#Open
+:Open rdf:type owl:NamedIndividual ,
+               :IncidentStatus ;
+      rdfs:label "Open"@en .
+
+
+###  https://w3id.org/municipal-it-incidents#Resolved
+:Resolved rdf:type owl:NamedIndividual ,
+                   :IncidentStatus ;
+          rdfs:label "Resolved"@en .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ owl:intersectionOf ( :ITIncident
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :hasStatus ;
+                         owl:someValuesFrom [ rdf:type owl:Class ;
+                                              owl:oneOf ( :InProgress
+                                                          :Resolved
+                                                        )
+                                            ]
+                       ]
+                     ) ;
+  rdf:type owl:Class ;
+  rdfs:subClassOf [ rdf:type owl:Restriction ;
+                    owl:onProperty :assignedTo ;
+                    owl:cardinality "1"^^xsd:nonNegativeInteger
+                  ]
+] .
+
+
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( :High
+                        :Low
+                        :Medium
+                      )
+] .
+
+
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( :InProgress
+                        :Open
+                        :Resolved
+                      )
+] .
+
+
+###  Generated by the OWL API (version 5.1.18) https://github.com/owlcs/owlapi/

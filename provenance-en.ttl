@@ -1,0 +1,12 @@
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix : <> .
+<https://w3id.org/municipal-it-incidents/1.1> a prov:Entity;
+	 dc:title "Municipal IT Incident Ontology";
+	 prov:wasAttributedTo :agent0;
+	 prov:wasAttributedTo <https://github.com/dgarijo/Widoco/>,<http://www.essepuntato.it/lode/>;
+	 prov:specializationOf <https://w3id.org/municipal-it-incidents#>;
+	 prov:wasGeneratedAt "2026-11-05";
+.
+:agent0 a prov:Agent; foaf:name "Omar García Carballo".

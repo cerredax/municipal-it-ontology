@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" href="primer.css" media="screen"/>
+<link rel="stylesheet" href="rec.css" media="screen"/>
+<link rel="stylesheet" href="extra.css" media="screen"/>
+<link rel="stylesheet" href="owl.css" media="screen"/>
+<link rel="stylesheet" href="dark.css" media="(prefers-color-scheme: dark)"/>
+<link rel="stylesheet" href="light.css" media="(prefers-color-scheme: light)"/>
+<link rel="stylesheet" href="slider.css" media="screen"/>
+<meta name="color-scheme" content="dark light">
+<script type="module" src="dark-mode-toggle.mjs"></script><div class="darkmode">
+	<dark-mode-toggle class="slider"></dark-mode-toggle>
+</div>
+ <title>Municipal IT Incident Ontology</title>
+
+
+<!-- SCHEMA.ORG METADATA -->
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","url":"https://w3id.org/municipal-it-incidents#","image":"http://vowl.visualdataweb.org/webvowl/#iri=https://w3id.org/municipal-it-incidents#","name":"Municipal IT Incident Ontology", "headline":"An OWL 2 ontology for describing municipal IT incidents, employees, departments, devices and technician assignments.", "datePublished":"Thu Nov 05 14:49:21 CET 2026", "dateModified":"2026-11-05", "version":"1.1", "license":"https://creativecommons.org/licenses/by/4.0/", "codeRepository":"https://github.com/cerredax/municipal-it-ontology", "author":[{"@type":"Person","name":"Omar García Carballo"}]}</script>
+
+<script src="jquery.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/marked@18.0.1/lib/marked.umd.min.js"></script> 
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11.14.0/+esm';mermaid.initialize({startOnLoad:false});window.mermaid=mermaid;</script> 
+    <script> 
+function scrollToHash() {
+  var h = location.hash;
+  if (!h || h.length < 2) return;
+  var id;
+  try { id = decodeURIComponent(h.slice(1)); } catch (e) { id = h.slice(1); }
+  var el = document.getElementById(id);
+  if (el) el.scrollIntoView();
+}
+function loadHash() {
+  jQuery(".markdown").each(function(el){jQuery(this).after(marked.parse(jQuery(this).text())).remove()});
+  if (typeof window.mermaid !== 'undefined') { window.mermaid.run({ querySelector: 'pre code.language-mermaid' }); }
+  loadTOC();
+  scrollToHash();
+  if (document.readyState === 'complete') { setTimeout(scrollToHash, 300); }
+  else { window.addEventListener('load', function(){ setTimeout(scrollToHash, 300); }); }
+}
+function loadTOC(){
+	//process toc dynamically
+	  var t='<h2>Table of contents</h2><ul>';i = 1;j=0;
+	  jQuery(".list").each(function(){
+		if(jQuery(this).is('h2')){
+			if(j>0){
+				t+='</ul>';
+				j=0;
+			}
+			t+= '<li>'+i+'. <a href=#'+ jQuery(this).attr('id')+'>'+ jQuery(this).ignore("span").text()+'</a></li>';
+			i++;
+		}
+		if(jQuery(this).is('h3')){
+			if(j==0){
+				t+='<ul>';
+			}
+			j++;
+			t+= '<li>'+(i-1)+'.'+j+'. '+'<a href=#'+ jQuery(this).attr('id')+'>'+ jQuery(this).ignore("span").text()+'</a></li>';
+		}
+	  });
+	  t+='</ul>';
+	  $("#toc").html(t); 
+}
+$(function(){
+    loadHash();
+}); $.fn.ignore = function(sel){
+        return this.clone().find(sel||">*").remove().end();
+ }; 
+   </script> 
+  </head> 
+
+<body>
+<div class="container">
+<div class="head">
+<div style="float:right">language <a href="index-en.html"><b>en</b></a> </div>
+<h1>Municipal IT Incident Ontology</h1>
+<h2>Release: 2026-11-05</h2>
+
+
+<dl>
+<dt>Modified on: 2026-11-05</dt>
+<dt>This version:</dt>
+<dd><a href="https://w3id.org/municipal-it-incidents/1.1">https://w3id.org/municipal-it-incidents/1.1</a></dd>
+<dt>Latest version:</dt>
+<dd><a href="https://w3id.org/municipal-it-incidents#">https://w3id.org/municipal-it-incidents#</a></dd>
+<dt>Revision:</dt>
+<dd>1.1</dd>
+<dt>Authors:</dt>
+<dd>Omar García Carballo</dd>
+
+<dt>Download serialization:</dt><dd><span><a href="ontology.jsonld" target="_blank"><img src="https://img.shields.io/badge/Format-JSON_LD-blue.svg" alt="JSON-LD" /></a> </span><span><a href="ontology.owl" target="_blank"><img src="https://img.shields.io/badge/Format-RDF/XML-blue.svg" alt="RDF/XML" /></a> </span><span><a href="ontology.nt" target="_blank"><img src="https://img.shields.io/badge/Format-N_Triples-blue.svg" alt="N-Triples" /></a> </span><span><a href="ontology.ttl" target="_blank"><img src="https://img.shields.io/badge/Format-TTL-blue.svg" alt="TTL" /></a> </span></dd><dt>License:</dt><dd><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank"><img src="https://img.shields.io/badge/License-https://creativecommons.org/licenses/by/4.0/-blue.svg" alt="https://creativecommons.org/licenses/by/4.0/" /></a>
+</dd><!-- <dt>Evaluation:</dt><dd><a href="OOPSevaluation/oopsEval.html#" target="_blank"><img src="https://img.shields.io/badge/Evaluate_with-OOPS! (OntOlogy Pitfall Scanner!)-blue.svg" alt="Evaluate with OOPS!" /></a></dd> --><dt>Cite as:</dt>
+<dd>Omar García Carballo. Municipal IT Incident Ontology. Revision: 1.1. Retrieved from: https://w3id.org/municipal-it-incidents/1.1</dd>
+<dt>Vocabulary maintained at:</dt>
+<dd><a href="https://github.com/cerredax/municipal-it-ontology">https://github.com/cerredax/municipal-it-ontology</a></dd>
+</dl>
+
+<a href="provenance-en.html" target="_blank">Provenance of this page</a><hr/>
+</div>
+<div class="status">
+<div>
+<span>Ontology Specification Draft</span>
+</div>
+</div>     <div id="abstract"><h2>Abstract</h2><span class="markdown">
+An OWL 2 ontology for describing municipal IT incidents, employees, departments, devices and technician assignments.</span>
+</div>
+<div id="toc"></div> 
+
+<!--INTRODUCTION SECTION-->
+    <div id="introduction"><h2 id="intro" class="list">Introduction <span class="backlink"> back to <a href="#toc">ToC</a></span></h2>
+<span class="markdown">This vocabulary was developed by Omar García Carballo as a practical ontology engineering course project. Intended users are municipal helpdesk staff and developers of interoperable incident management systems.</span>
+<div id="namespacedeclarations">
+<h3 id="ns" class="list">Namespace declarations</h3>
+<div id="ns" align="center">
+<table>
+<caption> <a href="#ns"> Table 1</a>: Namespaces used in the document </caption>
+<tbody>
+<tr><td><b>dcterms</b></td><td>&lt;http://purl.org/dc/terms/&gt;</td></tr>
+<tr><td><b>mit</b></td><td>&lt;https://w3id.org/municipal-it-incidents#&gt;</td></tr>
+<tr><td><b>ns1</b></td><td>&lt;https://w3id.org/widoco/vocab#&gt;</td></tr>
+<tr><td><b>owl</b></td><td>&lt;http://www.w3.org/2002/07/owl#&gt;</td></tr>
+<tr><td><b>rdf</b></td><td>&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</td></tr>
+<tr><td><b>rdfs</b></td><td>&lt;http://www.w3.org/2000/01/rdf-schema#&gt;</td></tr>
+<tr><td><b>schema</b></td><td>&lt;https://schema.org/&gt;</td></tr>
+<tr><td><b>vann</b></td><td>&lt;http://purl.org/vocab/vann/&gt;</td></tr>
+<tr><td><b>xml</b></td><td>&lt;http://www.w3.org/XML/1998/namespace&gt;</td></tr>
+<tr><td><b>xsd</b></td><td>&lt;http://www.w3.org/2001/XMLSchema#&gt;</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+  
+
+<!--OVERVIEW SECTION-->
+    <div id="overview"><h2 id="overv" class="list">Municipal IT Incident Ontology: Overview <span class="backlink"> back to <a href="#toc">ToC</a></span></h2>
+<span class="markdown">
+This ontology has the following classes and properties.</span>
+<h4>Classes</h4>
+<ul xmlns=""
+    xmlns:widoco="https://w3id.org/widoco/vocab#"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    class="hlist">
+   <li>
+      <a href="#Computer" title="https://w3id.org/municipal-it-incidents#Computer">Computer</a>
+   </li>
+   <li>
+      <a href="#Department"
+         title="https://w3id.org/municipal-it-incidents#Department">Department</a>
+   </li>
+   <li>
+      <a href="#Device" title="https://w3id.org/municipal-it-incidents#Device">Device</a>
+   </li>
+   <li>
+      <a href="#Employee" title="https://w3id.org/municipal-it-incidents#Employee">Employee</a>
+   </li>
+   <li>
+      <a href="#IncidentPriority"
+         title="https://w3id.org/municipal-it-incidents#IncidentPriority">IncidentPriority</a>
+   </li>
+   <li>
+      <a href="#IncidentStatus"
+         title="https://w3id.org/municipal-it-incidents#IncidentStatus">IncidentStatus</a>
+   </li>
+   <li>
+      <a href="#ITIncident"
+         title="https://w3id.org/municipal-it-incidents#ITIncident">ITIncident</a>
+   </li>
+   <li>
+      <a href="#Printer" title="https://w3id.org/municipal-it-incidents#Printer">Printer</a>
+   </li>
+   <li>
+      <a href="#Technician"
+         title="https://w3id.org/municipal-it-incidents#Technician">Technician</a>
+   </li>
+</ul>
+<h4>Object Properties</h4><ul xmlns=""
+    xmlns:widoco="https://w3id.org/widoco/vocab#"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    class="hlist">
+   <li>
+      <a href="#affectsDevice"
+         title="https://w3id.org/municipal-it-incidents#affectsDevice">affectsDevice</a>
+   </li>
+   <li>
+      <a href="#assignedTo"
+         title="https://w3id.org/municipal-it-incidents#assignedTo">assignedTo</a>
+   </li>
+   <li>
+      <a href="#belongsToDepartment"
+         title="https://w3id.org/municipal-it-incidents#belongsToDepartment">belongsToDepartment</a>
+   </li>
+   <li>
+      <a href="#hasPriority"
+         title="https://w3id.org/municipal-it-incidents#hasPriority">hasPriority</a>
+   </li>
+   <li>
+      <a href="#hasStatus"
+         title="https://w3id.org/municipal-it-incidents#hasStatus">hasStatus</a>
+   </li>
+   <li>
+      <a href="#reportedBy"
+         title="https://w3id.org/municipal-it-incidents#reportedBy">reportedBy</a>
+   </li>
+   <li>
+      <a href="#usesDevice"
+         title="https://w3id.org/municipal-it-incidents#usesDevice">usesDevice</a>
+   </li>
+</ul>
+<h4>Data Properties</h4><ul xmlns=""
+    xmlns:widoco="https://w3id.org/widoco/vocab#"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    class="hlist">
+   <li>
+      <a href="#description"
+         title="https://w3id.org/municipal-it-incidents#description">description</a>
+   </li>
+   <li>
+      <a href="#incidentId"
+         title="https://w3id.org/municipal-it-incidents#incidentId">incidentId</a>
+   </li>
+   <li>
+      <a href="#reportedAt"
+         title="https://w3id.org/municipal-it-incidents#reportedAt">reportedAt</a>
+   </li>
+</ul>
+<h4>Named Individuals</h4><ul xmlns=""
+    xmlns:widoco="https://w3id.org/widoco/vocab#"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    class="hlist">
+   <li>
+      <a href="#High" title="https://w3id.org/municipal-it-incidents#High">High</a>
+   </li>
+   <li>
+      <a href="#InProgress"
+         title="https://w3id.org/municipal-it-incidents#InProgress">InProgress</a>
+   </li>
+   <li>
+      <a href="#Low" title="https://w3id.org/municipal-it-incidents#Low">Low</a>
+   </li>
+   <li>
+      <a href="#Medium" title="https://w3id.org/municipal-it-incidents#Medium">Medium</a>
+   </li>
+   <li>
+      <a href="#Open" title="https://w3id.org/municipal-it-incidents#Open">Open</a>
+   </li>
+   <li>
+      <a href="#Resolved" title="https://w3id.org/municipal-it-incidents#Resolved">Resolved</a>
+   </li>
+</ul>
+
+</div>
+  
+
+<!--DESCRIPTION SECTION-->
+    <div id="description"><h2 id="desc" class="list">Municipal IT Incident Ontology: Description <span class="backlink"> back to <a href="#toc">ToC</a></span></h2>
+
+<span class="markdown">The ontology supports a small municipal helpdesk. It models incident reporting, affected devices, current status and priority, assignment to technicians and employee department membership. Software applications, network infrastructure, service-level agreements and change management are outside its scope.</span></div>
+   
+
+<!--CROSSREF SECTION-->
+   <div id="crossref"><h2 id="crossreference" class="list">Cross-reference for Municipal IT Incident Ontology classes, object properties and data properties <span class="backlink"> back to <a href="#toc">ToC</a></span></h2>
+This section provides details for each class and property defined by Municipal IT Incident Ontology.
+<div xmlns="" xmlns:widoco="https://w3id.org/widoco/vocab#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="classes">
+ <h3 id="classes-headline" class="list">Classes</h3>
+ <ul class="hlist">
+  <li><a href="#Computer" title="https://w3id.org/municipal-it-incidents#Computer">Computer</a></li>
+  <li><a href="#Department" title="https://w3id.org/municipal-it-incidents#Department">Department</a></li>
+  <li><a href="#Device" title="https://w3id.org/municipal-it-incidents#Device">Device</a></li>
+  <li><a href="#Employee" title="https://w3id.org/municipal-it-incidents#Employee">Employee</a></li>
+  <li><a href="#IncidentPriority" title="https://w3id.org/municipal-it-incidents#IncidentPriority">IncidentPriority</a></li>
+  <li><a href="#IncidentStatus" title="https://w3id.org/municipal-it-incidents#IncidentStatus">IncidentStatus</a></li>
+  <li><a href="#ITIncident" title="https://w3id.org/municipal-it-incidents#ITIncident">ITIncident</a></li>
+  <li><a href="#Printer" title="https://w3id.org/municipal-it-incidents#Printer">Printer</a></li>
+  <li><a href="#Technician" title="https://w3id.org/municipal-it-incidents#Technician">Technician</a></li>
+ </ul>
+ <div class="entity" id="Computer">
+  <h3>Computer<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> https://w3id.org/municipal-it-incidents#Computer</p>
+  <div class="comment">
+   <span class="markdown">Computer device.</span>
+  </div>
+  <dl class="description">
+   <dt>has super-classes</dt>
+   <dd>
+    <a href="#Device" title="https://w3id.org/municipal-it-incidents#Device">Device</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="Department">
+  <h3>Department<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> https://w3id.org/municipal-it-incidents#Department</p>
+  <div class="comment">
+   <span class="markdown">Municipal organisational unit.</span>
+  </div>
+  <dl class="description">
+   <dt>is in range of</dt>
+   <dd>
+    <a href="#belongsToDepartment" title="https://w3id.org/municipal-it-incidents#belongsToDepartment">belongsToDepartment</a> <sup class="type-op" title="object property">op</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="Device">
+  <h3>Device<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> https://w3id.org/municipal-it-incidents#Device</p>
+  <div class="comment">
+   <span class="markdown">Physical IT equipment.</span>
+  </div>
+  <dl class="description">
+   <dt>has sub-classes</dt>
+   <dd>
+    <a href="#Computer" title="https://w3id.org/municipal-it-incidents#Computer">Computer</a> <sup class="type-c" title="class">c</sup>, <a href="#Printer" title="https://w3id.org/municipal-it-incidents#Printer">Printer</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+   <dt>is in range of</dt>
+   <dd>
+    <a href="#affectsDevice" title="https://w3id.org/municipal-it-incidents#affectsDevice">affectsDevice</a> <sup class="type-op" title="object property">op</sup>, <a href="#usesDevice" title="https://w3id.org/municipal-it-incidents#usesDevice">usesDevice</a> <sup class="type-op" title="object property">op</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="Employee">
+  <h3>Employee<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> https://w3id.org/municipal-it-incidents#Employee</p>
+  <div class="comment">
+   <span class="markdown">Municipal employee.</span>
+  </div>
+  <dl class="description">
+   <dt>has super-classes</dt>
+   <dd></dd>
+   <dt>has sub-classes</dt>
+   <dd>
+    <a href="#Technician" title="https://w3id.org/municipal-it-incidents#Technician">Technician</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+   <dt>is in domain of</dt>
+   <dd>
+    <a href="#belongsToDepartment" title="https://w3id.org/municipal-it-incidents#belongsToDepartment">belongsToDepartment</a> <sup class="type-op" title="object property">op</sup>, <a href="#usesDevice" title="https://w3id.org/municipal-it-incidents#usesDevice">usesDevice</a> <sup class="type-op" title="object property">op</sup>
+   </dd>
+   <dt>is in range of</dt>
+   <dd>
+    <a href="#reportedBy" title="https://w3id.org/municipal-it-incidents#reportedBy">reportedBy</a> <sup class="type-op" title="object property">op</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="IncidentPriority">
+  <h3>IncidentPriority<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> https://w3id.org/municipal-it-incidents#IncidentPriority</p>
+  <div class="comment">
+   <span class="markdown">Controlled current incident priority.</span>
+  </div>
+  <dl class="description">
+   <dt>is equivalent to</dt>
+   <dd>
+    { <a href="#High" title="https://w3id.org/municipal-it-incidents#High">High</a> <sup class="type-ni" title="named individual">ni</sup> , <a href="#Low" title="https://w3id.org/municipal-it-incidents#Low">Low</a> <sup class="type-ni" title="named individual">ni</sup> , <a href="#Medium" title="https://w3id.org/municipal-it-incidents#Medium">Medium</a> <sup class="type-ni" title="named individual">ni</sup> }
+   </dd>
+   <dt>is in range of</dt>
+   <dd>
+    <a href="#hasPriority" title="https://w3id.org/municipal-it-incidents#hasPriority">hasPriority</a> <sup class="type-op" title="object property">op</sup>
+   </dd>
+   <dt>has members</dt>
+   <dd>
+    <a href="#High" title="https://w3id.org/municipal-it-incidents#High">High</a> <sup class="type-ni" title="named individual">ni</sup>, <a href="#Low" title="https://w3id.org/municipal-it-incidents#Low">Low</a> <sup class="type-ni" title="named individual">ni</sup>, <a href="#Medium" title="https://w3id.org/municipal-it-incidents#Medium">Medium</a> <sup class="type-ni" title="named individual">ni</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="IncidentStatus">
+  <h3>IncidentStatus<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> https://w3id.org/municipal-it-incidents#IncidentStatus</p>
+  <div class="comment">
+   <span class="markdown">Controlled current incident status.</span>
+  </div>
+  <dl class="description">
+   <dt>is equivalent to</dt>
+   <dd>
+    { <a href="#InProgress" title="https://w3id.org/municipal-it-incidents#InProgress">InProgress</a> <sup class="type-ni" title="named individual">ni</sup> , <a href="#Open" title="https://w3id.org/municipal-it-incidents#Open">Open</a> <sup class="type-ni" title="named individual">ni</sup> , <a href="#Resolved" title="https://w3id.org/municipal-it-incidents#Resolved">Resolved</a> <sup class="type-ni" title="named individual">ni</sup> }
+   </dd>
+   <dt>is in range of</dt>
+   <dd>
+    <a href="#hasStatus" title="https://w3id.org/municipal-it-incidents#hasStatus">hasStatus</a> <sup class="type-op" title="object property">op</sup>
+   </dd>
+   <dt>has members</dt>
+   <dd>
+    <a href="#InProgress" title="https://w3id.org/municipal-it-incidents#InProgress">InProgress</a> <sup class="type-ni" title="named individual">ni</sup>, <a href="#Open" title="https://w3id.org/municipal-it-incidents#Open">Open</a> <sup class="type-ni" title="named individual">ni</sup>, <a href="#Resolved" title="https://w3id.org/municipal-it-incidents#Resolved">Resolved</a> <sup class="type-ni" title="named individual">ni</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="ITIncident">
+  <h3>ITIncident<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> https://w3id.org/municipal-it-incidents#ITIncident</p>
+  <div class="comment">
+   <span class="markdown">Unplanned interruption or reduction in IT service quality.</span>
+  </div>
+  <dl class="description">
+   <dt>has super-classes</dt>
+   <dd></dd>
+   <dt>is in domain of</dt>
+   <dd>
+    <a href="#affectsDevice" title="https://w3id.org/municipal-it-incidents#affectsDevice">affectsDevice</a> <sup class="type-op" title="object property">op</sup>, <a href="#assignedTo" title="https://w3id.org/municipal-it-incidents#assignedTo">assignedTo</a> <sup class="type-op" title="object property">op</sup>, <a href="#description" title="https://w3id.org/municipal-it-incidents#description">description</a> <sup class="type-dp" title="data property">dp</sup>, <a href="#hasPriority" title="https://w3id.org/municipal-it-incidents#hasPriority">hasPriority</a> <sup class="type-op" title="object property">op</sup>, <a href="#hasStatus" title="https://w3id.org/municipal-it-incidents#hasStatus">hasStatus</a> <sup class="type-op" title="object property">op</sup>, <a href="#incidentId" title="https://w3id.org/municipal-it-incidents#incidentId">incidentId</a> <sup class="type-dp" title="data property">dp</sup>, <a href="#reportedAt" title="https://w3id.org/municipal-it-incidents#reportedAt">reportedAt</a> <sup class="type-dp" title="data property">dp</sup>, <a href="#reportedBy" title="https://w3id.org/municipal-it-incidents#reportedBy">reportedBy</a> <sup class="type-op" title="object property">op</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="Printer">
+  <h3>Printer<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> https://w3id.org/municipal-it-incidents#Printer</p>
+  <div class="comment">
+   <span class="markdown">Printer device.</span>
+  </div>
+  <dl class="description">
+   <dt>has super-classes</dt>
+   <dd>
+    <a href="#Device" title="https://w3id.org/municipal-it-incidents#Device">Device</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="Technician">
+  <h3>Technician<sup class="type-c" title="class">c</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a> </span></h3>
+  <p><strong>IRI:</strong> https://w3id.org/municipal-it-incidents#Technician</p>
+  <div class="comment">
+   <span class="markdown">Employee responsible for handling IT incidents.</span>
+  </div>
+  <dl class="description">
+   <dt>has super-classes</dt>
+   <dd>
+    <a href="#Employee" title="https://w3id.org/municipal-it-incidents#Employee">Employee</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+   <dt>is in range of</dt>
+   <dd>
+    <a href="#assignedTo" title="https://w3id.org/municipal-it-incidents#assignedTo">assignedTo</a> <sup class="type-op" title="object property">op</sup>
+   </dd>
+  </dl>
+ </div>
+</div><div xmlns="" xmlns:widoco="https://w3id.org/widoco/vocab#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="objectproperties">
+ <h3 id="properties" class="list">Object Properties</h3>
+ <ul class="hlist">
+  <li><a href="#affectsDevice" title="https://w3id.org/municipal-it-incidents#affectsDevice">affectsDevice</a></li>
+  <li><a href="#assignedTo" title="https://w3id.org/municipal-it-incidents#assignedTo">assignedTo</a></li>
+  <li><a href="#belongsToDepartment" title="https://w3id.org/municipal-it-incidents#belongsToDepartment">belongsToDepartment</a></li>
+  <li><a href="#hasPriority" title="https://w3id.org/municipal-it-incidents#hasPriority">hasPriority</a></li>
+  <li><a href="#hasStatus" title="https://w3id.org/municipal-it-incidents#hasStatus">hasStatus</a></li>
+  <li><a href="#reportedBy" title="https://w3id.org/municipal-it-incidents#reportedBy">reportedBy</a></li>
+  <li><a href="#usesDevice" title="https://w3id.org/municipal-it-incidents#usesDevice">usesDevice</a></li>
+ </ul>
+ <div class="entity" id="affectsDevice">
+  <h3>affectsDevice<sup class="type-op" title="object property">op</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> https://w3id.org/municipal-it-incidents#affectsDevice</p>
+  <div class="comment">
+   <span class="markdown">A device affected by an incident; an incident may affect several devices.</span>
+  </div>
+  <div class="description">
+   <dl>
+    <dt>has domain</dt>
+    <dd>
+     <a href="#ITIncident" title="https://w3id.org/municipal-it-incidents#ITIncident">ITIncident</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>has range</dt>
+    <dd>
+     <a href="#Device" title="https://w3id.org/municipal-it-incidents#Device">Device</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+   </dl>
+  </div>
+ </div>
+ <div class="entity" id="assignedTo">
+  <h3>assignedTo<sup class="type-op" title="object property">op</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> https://w3id.org/municipal-it-incidents#assignedTo</p>
+  <div class="comment">
+   <span class="markdown">The technician currently assigned to an incident.</span>
+  </div>
+  <div class="description">
+   <p><strong>has characteristics: </strong> functional</p>
+   <dl>
+    <dt>has domain</dt>
+    <dd>
+     <a href="#ITIncident" title="https://w3id.org/municipal-it-incidents#ITIncident">ITIncident</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>has range</dt>
+    <dd>
+     <a href="#Technician" title="https://w3id.org/municipal-it-incidents#Technician">Technician</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+   </dl>
+  </div>
+ </div>
+ <div class="entity" id="belongsToDepartment">
+  <h3>belongsToDepartment<sup class="type-op" title="object property">op</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> https://w3id.org/municipal-it-incidents#belongsToDepartment</p>
+  <div class="comment">
+   <span class="markdown">The municipal department to which an employee belongs.</span>
+  </div>
+  <div class="description">
+   <p><strong>has characteristics: </strong> functional</p>
+   <dl>
+    <dt>has domain</dt>
+    <dd>
+     <a href="#Employee" title="https://w3id.org/municipal-it-incidents#Employee">Employee</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>has range</dt>
+    <dd>
+     <a href="#Department" title="https://w3id.org/municipal-it-incidents#Department">Department</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+   </dl>
+  </div>
+ </div>
+ <div class="entity" id="hasPriority">
+  <h3>hasPriority<sup class="type-op" title="object property">op</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> https://w3id.org/municipal-it-incidents#hasPriority</p>
+  <div class="comment">
+   <span class="markdown">The current priority of an incident: Low, Medium or High.</span>
+  </div>
+  <div class="description">
+   <p><strong>has characteristics: </strong> functional</p>
+   <dl>
+    <dt>has domain</dt>
+    <dd>
+     <a href="#ITIncident" title="https://w3id.org/municipal-it-incidents#ITIncident">ITIncident</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>has range</dt>
+    <dd>
+     <a href="#IncidentPriority" title="https://w3id.org/municipal-it-incidents#IncidentPriority">IncidentPriority</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+   </dl>
+  </div>
+ </div>
+ <div class="entity" id="hasStatus">
+  <h3>hasStatus<sup class="type-op" title="object property">op</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> https://w3id.org/municipal-it-incidents#hasStatus</p>
+  <div class="comment">
+   <span class="markdown">The current status of an incident: Open, InProgress or Resolved.</span>
+  </div>
+  <div class="description">
+   <p><strong>has characteristics: </strong> functional</p>
+   <dl>
+    <dt>has domain</dt>
+    <dd>
+     <a href="#ITIncident" title="https://w3id.org/municipal-it-incidents#ITIncident">ITIncident</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>has range</dt>
+    <dd>
+     <a href="#IncidentStatus" title="https://w3id.org/municipal-it-incidents#IncidentStatus">IncidentStatus</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+   </dl>
+  </div>
+ </div>
+ <div class="entity" id="reportedBy">
+  <h3>reportedBy<sup class="type-op" title="object property">op</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> https://w3id.org/municipal-it-incidents#reportedBy</p>
+  <div class="comment">
+   <span class="markdown">The employee who reported an incident.</span>
+  </div>
+  <div class="description">
+   <p><strong>has characteristics: </strong> functional</p>
+   <dl>
+    <dt>has domain</dt>
+    <dd>
+     <a href="#ITIncident" title="https://w3id.org/municipal-it-incidents#ITIncident">ITIncident</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>has range</dt>
+    <dd>
+     <a href="#Employee" title="https://w3id.org/municipal-it-incidents#Employee">Employee</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+   </dl>
+  </div>
+ </div>
+ <div class="entity" id="usesDevice">
+  <h3>usesDevice<sup class="type-op" title="object property">op</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> https://w3id.org/municipal-it-incidents#usesDevice</p>
+  <div class="comment">
+   <span class="markdown">A device used by an employee; devices may be shared.</span>
+  </div>
+  <div class="description">
+   <dl>
+    <dt>has domain</dt>
+    <dd>
+     <a href="#Employee" title="https://w3id.org/municipal-it-incidents#Employee">Employee</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>has range</dt>
+    <dd>
+     <a href="#Device" title="https://w3id.org/municipal-it-incidents#Device">Device</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+   </dl>
+  </div>
+ </div>
+</div><div xmlns="" xmlns:widoco="https://w3id.org/widoco/vocab#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="dataproperties">
+ <h3 id="dataproperties-headline" class="list">Data Properties</h3>
+ <ul class="hlist">
+  <li><a href="#description" title="https://w3id.org/municipal-it-incidents#description">description</a></li>
+  <li><a href="#incidentId" title="https://w3id.org/municipal-it-incidents#incidentId">incidentId</a></li>
+  <li><a href="#reportedAt" title="https://w3id.org/municipal-it-incidents#reportedAt">reportedAt</a></li>
+ </ul>
+ <div class="entity" id="description">
+  <h3>description<sup class="type-dp" title="data property">dp</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#dataproperties">Data Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> https://w3id.org/municipal-it-incidents#description</p>
+  <div class="comment">
+   <span class="markdown">A textual description of the incident.</span>
+  </div>
+  <div class="description">
+   <p><strong>has characteristics: </strong> functional</p>
+   <dl>
+    <dt>has domain</dt>
+    <dd>
+     <a href="#ITIncident" title="https://w3id.org/municipal-it-incidents#ITIncident">ITIncident</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>has range</dt>
+    <dd>
+     <a href="http://www.w3.org/2001/XMLSchema#string" target="_blank" title="http://www.w3.org/2001/XMLSchema#string">string</a>
+    </dd>
+   </dl>
+  </div>
+ </div>
+ <div class="entity" id="incidentId">
+  <h3>incidentId<sup class="type-dp" title="data property">dp</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#dataproperties">Data Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> https://w3id.org/municipal-it-incidents#incidentId</p>
+  <div class="comment">
+   <span class="markdown">The identifier assigned to an incident by the helpdesk application. Global uniqueness must be checked by the application.</span>
+  </div>
+  <div class="description">
+   <p><strong>has characteristics: </strong> functional</p>
+   <dl>
+    <dt>has domain</dt>
+    <dd>
+     <a href="#ITIncident" title="https://w3id.org/municipal-it-incidents#ITIncident">ITIncident</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>has range</dt>
+    <dd>
+     <a href="http://www.w3.org/2001/XMLSchema#string" target="_blank" title="http://www.w3.org/2001/XMLSchema#string">string</a>
+    </dd>
+   </dl>
+  </div>
+ </div>
+ <div class="entity" id="reportedAt">
+  <h3>reportedAt<sup class="type-dp" title="data property">dp</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#dataproperties">Data Property ToC</a> </span></h3>
+  <p><strong>IRI:</strong> https://w3id.org/municipal-it-incidents#reportedAt</p>
+  <div class="comment">
+   <span class="markdown">The date and time at which an incident was reported.</span>
+  </div>
+  <div class="description">
+   <p><strong>has characteristics: </strong> functional</p>
+   <dl>
+    <dt>has domain</dt>
+    <dd>
+     <a href="#ITIncident" title="https://w3id.org/municipal-it-incidents#ITIncident">ITIncident</a> <sup class="type-c" title="class">c</sup>
+    </dd>
+    <dt>has range</dt>
+    <dd>
+     <a href="http://www.w3.org/2001/XMLSchema#dateTime" target="_blank" title="http://www.w3.org/2001/XMLSchema#dateTime">date Time</a>
+    </dd>
+   </dl>
+  </div>
+ </div>
+</div><div xmlns="" xmlns:widoco="https://w3id.org/widoco/vocab#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="namedindividuals">
+ <h3 id="namedindividuals" class="list">Named Individuals</h3>
+ <ul class="hlist">
+  <li><a href="#High" title="https://w3id.org/municipal-it-incidents#High">High</a></li>
+  <li><a href="#InProgress" title="https://w3id.org/municipal-it-incidents#InProgress">InProgress</a></li>
+  <li><a href="#Low" title="https://w3id.org/municipal-it-incidents#Low">Low</a></li>
+  <li><a href="#Medium" title="https://w3id.org/municipal-it-incidents#Medium">Medium</a></li>
+  <li><a href="#Open" title="https://w3id.org/municipal-it-incidents#Open">Open</a></li>
+  <li><a href="#Resolved" title="https://w3id.org/municipal-it-incidents#Resolved">Resolved</a></li>
+ </ul>
+ <div class="entity" id="High">
+  <h3>High<sup class="type-ni" title="named individual">ni</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#namedindividuals">Named Individual ToC</a> </span></h3>
+  <p><strong>IRI:</strong> https://w3id.org/municipal-it-incidents#High</p>
+  <dl class="description">
+   <dt>belongs to</dt>
+   <dd>
+    <a href="#IncidentPriority" title="https://w3id.org/municipal-it-incidents#IncidentPriority">IncidentPriority</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="InProgress">
+  <h3>InProgress<sup class="type-ni" title="named individual">ni</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#namedindividuals">Named Individual ToC</a> </span></h3>
+  <p><strong>IRI:</strong> https://w3id.org/municipal-it-incidents#InProgress</p>
+  <dl class="description">
+   <dt>belongs to</dt>
+   <dd>
+    <a href="#IncidentStatus" title="https://w3id.org/municipal-it-incidents#IncidentStatus">IncidentStatus</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="Low">
+  <h3>Low<sup class="type-ni" title="named individual">ni</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#namedindividuals">Named Individual ToC</a> </span></h3>
+  <p><strong>IRI:</strong> https://w3id.org/municipal-it-incidents#Low</p>
+  <dl class="description">
+   <dt>belongs to</dt>
+   <dd>
+    <a href="#IncidentPriority" title="https://w3id.org/municipal-it-incidents#IncidentPriority">IncidentPriority</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="Medium">
+  <h3>Medium<sup class="type-ni" title="named individual">ni</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#namedindividuals">Named Individual ToC</a> </span></h3>
+  <p><strong>IRI:</strong> https://w3id.org/municipal-it-incidents#Medium</p>
+  <dl class="description">
+   <dt>belongs to</dt>
+   <dd>
+    <a href="#IncidentPriority" title="https://w3id.org/municipal-it-incidents#IncidentPriority">IncidentPriority</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="Open">
+  <h3>Open<sup class="type-ni" title="named individual">ni</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#namedindividuals">Named Individual ToC</a> </span></h3>
+  <p><strong>IRI:</strong> https://w3id.org/municipal-it-incidents#Open</p>
+  <dl class="description">
+   <dt>belongs to</dt>
+   <dd>
+    <a href="#IncidentStatus" title="https://w3id.org/municipal-it-incidents#IncidentStatus">IncidentStatus</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+ <div class="entity" id="Resolved">
+  <h3>Resolved<sup class="type-ni" title="named individual">ni</sup> <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#namedindividuals">Named Individual ToC</a> </span></h3>
+  <p><strong>IRI:</strong> https://w3id.org/municipal-it-incidents#Resolved</p>
+  <dl class="description">
+   <dt>belongs to</dt>
+   <dd>
+    <a href="#IncidentStatus" title="https://w3id.org/municipal-it-incidents#IncidentStatus">IncidentStatus</a> <sup class="type-c" title="class">c</sup>
+   </dd>
+  </dl>
+ </div>
+</div><div id="legend">
+<h2>Legend <span class="backlink"> back to <a href="#toc">ToC</a></span></h2>
+<div   class="entity">
+<sup class="type-c" title="Classes">c</sup>: Classes <br/>
+<sup class="type-op" title="Object Properties">op</sup>: Object Properties <br/>
+<sup class="type-dp" title="Data Properties">dp</sup>: Data Properties <br/>
+<sup class="type-ni" title="Named Individuals">ni</sup>: Named Individuals <br/>
+</div>
+</div>
+</div>
+<div id="acknowledgments">
+<h2 id="ack" class="list">Acknowledgments <span class="backlink"> back to <a href="#toc">ToC</a></span></h2>
+<p>
+The authors would like to thank <a href="http://www.essepuntato.it/">Silvio Peroni</a> for developing <a href="http://www.essepuntato.it/lode">LODE</a>, a Live OWL Documentation Environment, which is used for representing the Cross Referencing Section of this document and <a href="https://w3id.org/people/dgarijo">Daniel Garijo</a> for developing <a href="https://github.com/dgarijo/Widoco">Widoco</a>, the program used to create the template used in this documentation.</p>
+</div>
+
+
+</div>
+</body>
+</html>
